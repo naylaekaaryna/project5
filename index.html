@@ -1,0 +1,1328 @@
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Malam Ini 💗</title>
+
+    <style>
+        /* =====================================================
+           RESET & BODY
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #55105f,
+                    #1a0324 60%,
+                    #08000d
+                );
+        }
+
+
+        /* =====================================================
+           BACKGROUND BINTANG
+        ===================================================== */
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+
+            background: white;
+            border-radius: 50%;
+
+            animation: blink 2s infinite alternate;
+        }
+
+        @keyframes blink {
+            from {
+                opacity: 0.2;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        /* =====================================================
+           ANIMASI HATI
+        ===================================================== */
+
+        .heart {
+            position: fixed;
+            bottom: -40px;
+
+            z-index: 2;
+            pointer-events: none;
+
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform:
+                    translateY(0)
+                    scale(0.5)
+                    rotate(0deg);
+
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateY(-110vh)
+                    scale(1.4)
+                    rotate(30deg);
+
+                opacity: 0;
+            }
+        }
+
+
+        /* =====================================================
+           AMPLOP PEMBUKA
+        ===================================================== */
+
+        #cover {
+            position: fixed;
+            inset: 0;
+
+            z-index: 20;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            transition: 1s;
+        }
+
+        .envelope {
+            position: relative;
+
+            width: 330px;
+            height: 220px;
+
+            cursor: pointer;
+
+            animation: envelopeFloat 2s infinite ease-in-out;
+        }
+
+        @keyframes envelopeFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .envelope-body {
+            position: absolute;
+            inset: 0;
+
+            background: #ff5d9d;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 20px 70px
+                rgba(255, 70, 150, 0.4);
+        }
+
+        .envelope-body::before {
+            content: "";
+
+            position: absolute;
+            left: 0;
+            bottom: 0;
+
+            border-left: 165px solid transparent;
+            border-right: 165px solid transparent;
+            border-bottom: 120px solid #f03f85;
+        }
+
+        .flap {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            z-index: 3;
+
+            width: 0;
+            height: 0;
+
+            border-left: 165px solid transparent;
+            border-right: 165px solid transparent;
+            border-top: 130px solid #ff94bd;
+
+            transform-origin: top;
+
+            transition: 1s;
+        }
+
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+
+        .seal {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            z-index: 5;
+
+            width: 60px;
+            height: 60px;
+
+            transform: translate(-50%, -50%);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #c71962;
+
+            border-radius: 50%;
+
+            font-size: 30px;
+        }
+
+        .cover-text {
+            position: absolute;
+
+            top: calc(50% + 150px);
+
+            width: 100%;
+
+            color: #ffd9e9;
+
+            font-size: 17px;
+        }
+
+
+        /* =====================================================
+           AREA SLIDE
+        ===================================================== */
+
+        #slides {
+            position: fixed;
+            inset: 0;
+
+            z-index: 5;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+
+        /* =====================================================
+           CARD SLIDE
+        ===================================================== */
+
+        .slide {
+            width: min(700px, 94vw);
+            min-height: 480px;
+
+            padding: 45px 30px;
+
+            display: none;
+
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.09);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.2);
+
+            border-radius: 30px;
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 20px 80px
+                rgba(0, 0, 0, 0.4);
+
+            animation: slideShow 0.7s ease;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideShow {
+            from {
+                opacity: 0;
+                transform:
+                    translateX(60px)
+                    scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateX(0)
+                    scale(1);
+            }
+        }
+
+
+        /* =====================================================
+           ISI SLIDE
+        ===================================================== */
+
+        .emoji {
+            margin-bottom: 20px;
+
+            font-size: 65px;
+
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        h1 {
+            margin-bottom: 20px;
+
+            font-size:
+                clamp(30px, 7vw, 55px);
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff82b4,
+                    white,
+                    #ff82b4
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            color: transparent;
+        }
+
+        p {
+            color: #ffeaf4;
+
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            color: #ff9dc6;
+            font-weight: bold;
+        }
+
+        .big-text {
+            margin: 20px 0;
+
+            color: white;
+
+            font-size: 25px;
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 13px 25px;
+
+            border: none;
+            border-radius: 30px;
+
+            color: white;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff4f91,
+                    #ff83b7
+                );
+
+            box-shadow:
+                0 8px 25px
+                rgba(255, 70, 140, 0.3);
+
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+        }
+
+        .prev-button {
+            background:
+                rgba(255, 255, 255, 0.12);
+        }
+
+
+        /* =====================================================
+           COUNTER SLIDE
+        ===================================================== */
+
+        .counter {
+            position: absolute;
+
+            bottom: 20px;
+
+            color: #cdb4c4;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           STATUS MUSIK
+        ===================================================== */
+
+        .music-info {
+            position: fixed;
+
+            top: 18px;
+            right: 18px;
+
+            z-index: 10;
+
+            display: none;
+
+            padding: 9px 15px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255, 255, 255, 0.1);
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .envelope {
+                width: 280px;
+                height: 190px;
+            }
+
+            .flap {
+                border-left-width: 140px;
+                border-right-width: 140px;
+                border-top-width: 110px;
+            }
+
+            .envelope-body::before {
+                border-left-width: 140px;
+                border-right-width: 140px;
+                border-bottom-width: 105px;
+            }
+
+            .slide {
+                min-height: 450px;
+                padding: 35px 22px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            .big-text {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BINTANG
+    ===================================================== -->
+
+    <div
+        class="stars"
+        id="stars">
+    </div>
+
+
+    <!-- =====================================================
+         MUSIK
+    ===================================================== -->
+
+    <audio
+        id="music"
+        loop>
+
+        <source
+            src="lagu.mp3"
+            type="audio/mpeg">
+
+    </audio>
+
+
+    <!-- STATUS MUSIK -->
+
+    <div
+        class="music-info"
+        id="musicInfo">
+
+        🎵 Musik sedang diputar...
+
+    </div>
+
+
+    <!-- =====================================================
+         AMPLOP PEMBUKA
+    ===================================================== -->
+
+    <div id="cover">
+
+        <div>
+
+            <div
+                class="envelope"
+                id="envelope"
+                onclick="openLetter()">
+
+                <div class="envelope-body"></div>
+
+                <div class="flap"></div>
+
+                <div class="seal">
+                    💗
+                </div>
+
+            </div>
+
+
+            
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SEMUA SLIDE
+    ===================================================== -->
+
+    <div id="slides">
+
+
+        <!-- ================= SLIDE 1 ================= -->
+
+        <div class="slide active">
+
+            <div class="emoji">
+                🌙
+            </div>
+
+            <h1>
+                Malam Ini...
+            </h1>
+
+            <p>
+                Ada satu hal yang ingin
+                aku sampaikan.
+                <br><br>
+
+                Entah kenapa malam ini
+                aku kepikiran seseorang.
+                <br><br>
+
+                Seseorang yang mungkin
+                nggak sadar kalau ada
+                seseorang yang sedang
+                berharap kecil di sini. 🥺
+            </p>
+
+            <div class="buttons">
+
+                <button onclick="nextSlide()">
+                    Lanjut 💗
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SLIDE 2 ================= -->
+
+        <div class="slide">
+
+            <div class="emoji">
+                💭
+            </div>
+
+            <h1>
+                Jujur...
+            </h1>
+
+            <p>
+                Aku sebenarnya nggak
+                minta banyak.
+                <br><br>
+
+                Nggak minta dibalas panjang.
+                <br>
+
+                Nggak minta langsung
+                jadi orang spesial.
+                <br><br>
+
+                Aku cuma berharap...
+            </p>
+
+            <div class="big-text highlight">
+
+                Namaku muncul
+                di notifikasi kamu. 📱
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    class="prev-button"
+                    onclick="prevSlide()">
+
+                    ← Kembali
+
+                </button>
+
+                <button onclick="nextSlide()">
+
+                    Lanjut 💕
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SLIDE 3 ================= -->
+
+        <div class="slide">
+
+            <div class="emoji">
+                📱
+            </div>
+
+            <h1>
+                Satu Notifikasi
+            </h1>
+
+            <p>
+                Bayangin kalau malam ini
+               Aku ga on wa
+                <br><br>
+
+                Besok pagi aku bukanya...
+                <br><br>
+
+                Terus ada notifikasi:
+            </p>
+
+            <div class="big-text highlight">
+
+                "Ayo aku kasih kesempatan ke kamu, semoga berhasil ya"  💗
+
+            </div>
+
+            <p>
+                Kayaknya hari itu langsung
+                jadi hari yang nggak akan
+                aku lupain. 😭
+            </p>
+
+            <div class="buttons">
+
+                <button
+                    class="prev-button"
+                    onclick="prevSlide()">
+
+                    ←
+
+                </button>
+
+                <button onclick="nextSlide()">
+
+                    Lanjut ✨
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SLIDE 4 ================= -->
+
+        <div class="slide">
+
+            <div class="emoji">
+                🥺
+            </div>
+
+            <h1>
+                Kalau Boleh...
+            </h1>
+
+            <p>
+                Aku mau titip satu
+                harapan kecil
+                untuk malam ini.
+                <br><br>
+
+                Semoga perasaan yang
+                selama ini cuma aku
+                simpan sendiri...
+                <br><br>
+
+                bisa sedikit sampai ke kamu.
+            </p>
+
+            <div class="big-text">
+                💗
+            </div>
+
+            <p class="highlight">
+
+                Walaupun cuma lewat
+                sebuah chatan.
+
+            </p>
+
+            <div class="buttons">
+
+                <button
+                    class="prev-button"
+                    onclick="prevSlide()">
+
+                    ←
+
+                </button>
+
+                <button onclick="nextSlide()">
+
+                    Lanjut 🌙
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SLIDE 5 ================= -->
+
+        <div class="slide">
+
+            <div class="emoji">
+                🌌
+            </div>
+
+            <h1>
+                Di Bawah Langit Malam
+            </h1>
+
+            <p>
+                Banyak orang mungkin
+                sedang tidur.
+                <br><br>
+
+                Tapi di sini...
+                <br><br>
+
+                ada satu orang yang masih
+                berharap sebuah notifikasi
+                muncul di layar HP-nya.
+            </p>
+
+            <div class="big-text highlight">
+
+                Dan nama itu adalah kamu. 💕
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    class="prev-button"
+                    onclick="prevSlide()">
+
+                    ←
+
+                </button>
+
+                <button onclick="nextSlide()">
+
+                    Lanjut 🌙
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SLIDE 6 ================= -->
+
+        <div class="slide">
+
+            <div class="emoji">
+                😭💗
+            </div>
+
+            <h1>
+                Aku Nggak Maksa
+            </h1>
+
+            <p>
+                Aku tahu setiap orang
+                punya pilihan.
+                <br><br>
+
+                Jadi aku nggak akan maksa
+                kamu untuk melakukan
+                apa pun.
+                <br><br>
+
+                Aku cuma membolehkan diriku
+                sendiri punya sedikit harapan...
+            </p>
+
+            <div class="big-text highlight">
+
+                Semoga kamu juga
+                penasaran sama aku.
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    class="prev-button"
+                    onclick="prevSlide()">
+
+                    ←
+
+                </button>
+
+                <button onclick="nextSlide()">
+
+                    Lanjut 💞
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SLIDE 7 ================= -->
+
+        <div class="slide">
+
+            <div class="emoji">
+                💌
+            </div>
+
+            <h1>
+                Jadi...
+            </h1>
+
+            <p>
+                Kalau  kamu melihat pesan ini...
+                <br><br>
+
+                ketahuilah bahwa
+                ada seseorang yang
+                malam-malam berharap
+                sederhana.
+            </p>
+
+            <div class="big-text highlight">
+
+                Bukan minta banyak...
+                <br>
+
+                cuma ingin chatan 😭
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    class="prev-button"
+                    onclick="prevSlide()">
+
+                    ←
+
+                </button>
+
+                <button onclick="nextSlide()">
+
+                    Hampir Sampai 💗
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SLIDE 8 ================= -->
+
+        <div class="slide">
+
+            <div class="emoji">
+                💖
+            </div>
+
+            <h1>
+                Harapan Terakhir
+            </h1>
+
+            <p>
+                Malam ini...
+                <br><br>
+
+                aku cuma mau bilang:
+            </p>
+
+            <div class="big-text highlight">
+
+                Semoga cintaku...
+                <br>
+
+                semoga perasaanku...
+                <br>
+
+                    bismillah ya aku selalu
+
+            </div>
+
+            <h1>
+                DI-FOLBACK. 😭💗
+            </h1>
+
+            <p>
+                Kalau benar-benar terjadi,
+                mungkin senyumku malam ini
+                bakal susah hilang.
+                🌙✨
+            </p>
+
+            <div class="buttons">
+
+                <button
+                    class="prev-button"
+                    onclick="prevSlide()">
+
+                    ←
+
+                </button>
+
+                <button onclick="finish()">
+
+                    Tutup Surat 💌
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- COUNTER -->
+
+        <div
+            class="counter"
+            id="counter">
+
+            1 / 8
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        /* =================================================
+           MEMBUAT BINTANG
+        ================================================= */
+
+        const starsContainer =
+            document.getElementById("stars");
+
+        for (let i = 0; i < 120; i++) {
+
+            const star =
+                document.createElement("div");
+
+            star.className = "star";
+
+            star.style.left =
+                Math.random() * 100 + "%";
+
+            star.style.top =
+                Math.random() * 100 + "%";
+
+            star.style.animationDelay =
+                Math.random() * 2 + "s";
+
+            starsContainer.appendChild(star);
+        }
+
+
+        /* =================================================
+           MEMBUAT HATI TERBANG
+        ================================================= */
+
+        function createHeart() {
+
+            const heart =
+                document.createElement("div");
+
+            heart.className = "heart";
+
+            const heartList = [
+                "💗",
+                "💕",
+                "💖",
+                "💘",
+                "💞",
+                "❤️",
+                "💓"
+            ];
+
+            heart.innerHTML =
+                heartList[
+                    Math.floor(
+                        Math.random() *
+                        heartList.length
+                    )
+                ];
+
+            heart.style.left =
+                Math.random() * 100 + "%";
+
+            heart.style.fontSize =
+                15 + Math.random() * 25 + "px";
+
+            heart.style.animationDuration =
+                5 + Math.random() * 6 + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 11000);
+        }
+
+
+        /* Jalankan hati setiap 400ms */
+
+        setInterval(
+            createHeart,
+            400
+        );
+
+
+        /* =================================================
+           MUSIK
+        ================================================= */
+
+        const music =
+            document.getElementById("music");
+
+        function startMusic() {
+
+            music.volume = 0.65;
+
+            music.play()
+                .then(() => {
+
+                    document
+                        .getElementById("musicInfo")
+                        .style.display = "block";
+
+                })
+                .catch(() => {
+
+                    console.log(
+                        "Browser memblokir autoplay."
+                    );
+
+                });
+        }
+
+
+        /* =================================================
+           BUKA AMPLOP
+        ================================================= */
+
+        function openLetter() {
+
+            const envelope =
+                document.getElementById("envelope");
+
+            const cover =
+                document.getElementById("cover");
+
+            const slides =
+                document.getElementById("slides");
+
+
+            /* Animasi amplop */
+
+            envelope.classList.add("open");
+
+
+            /* Mulai musik */
+
+            startMusic();
+
+
+            /* Hilangkan cover */
+
+            setTimeout(() => {
+
+                cover.style.opacity = "0";
+
+            }, 700);
+
+
+            /* Tampilkan slide */
+
+            setTimeout(() => {
+
+                cover.style.display = "none";
+
+                slides.style.display = "flex";
+
+            }, 1500);
+        }
+
+
+        /* =================================================
+           SISTEM SLIDE
+        ================================================= */
+
+        let currentSlide = 0;
+
+        const slides =
+            document.querySelectorAll(".slide");
+
+        const counter =
+            document.getElementById("counter");
+
+
+        function showSlide(index) {
+
+            slides.forEach((slide) => {
+
+                slide.classList.remove("active");
+
+            });
+
+
+            slides[index]
+                .classList.add("active");
+
+
+            counter.innerHTML =
+                `${index + 1} / ${slides.length}`;
+        }
+
+
+        /* Slide berikutnya */
+
+        function nextSlide() {
+
+            if (
+                currentSlide <
+                slides.length - 1
+            ) {
+
+                currentSlide++;
+
+                showSlide(currentSlide);
+            }
+        }
+
+
+        /* Slide sebelumnya */
+
+        function prevSlide() {
+
+            if (currentSlide > 0) {
+
+                currentSlide--;
+
+                showSlide(currentSlide);
+            }
+        }
+
+
+        /* =================================================
+           SLIDE TERAKHIR
+        ================================================= */
+
+        function finish() {
+
+            const slidesContainer =
+                document.getElementById("slides");
+
+
+            slidesContainer.innerHTML = `
+
+                <div class="slide active">
+
+                    <div class="emoji">
+                        💗
+                    </div>
+
+                    <h1>
+                        Selamat Malam 🌙
+                    </h1>
+
+                    <p>
+                        Terima kasih sudah
+                        sampai sejauh ini.
+                        <br><br>
+
+                        Sekarang tinggal satu hal
+                        yang aku tunggu...
+                    </p>
+
+                    <div
+                        class="big-text highlight">
+
+                        📱
+                        "Dapat Notifikasi dari kamu ganteng"
+
+                    </div>
+
+                    <p>
+                        Semoga malam ini
+                        jadi malam keberuntungan. 💕
+                    </p>
+
+                    <div
+                        style="
+                            margin-top: 25px;
+                            font-size: 14px;
+                            color: #cdb4c4;
+                        ">
+
+                        Dengan penuh harapan,
+                        <br>
+
+                        seseorang yang menunggu
+                        dibalas cintanya. 💌
+
+                    </div>
+
+                </div>
+            `;
+
+
+            /* Ledakan hati */
+
+            for (let i = 0; i < 40; i++) {
+
+                setTimeout(
+                    createHeart,
+                    i * 80
+                );
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
